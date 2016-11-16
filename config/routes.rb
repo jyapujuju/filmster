@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
+  devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  authenticated :user do
+    root 'authenticated_views#index', as: :authenticated_root
+  end
+     root 'static_pages#index'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -23,7 +28,7 @@ Rails.application.routes.draw do
   #
   #     collection do
   #       get 'sold'
-  #     end
+  #     endend
   #   end
 
   # Example resource route with sub-resources:
@@ -48,7 +53,7 @@ Rails.application.routes.draw do
   #   resources :photos, concerns: :toggleable
 
   # Example resource route within a namespace:
-  #   namespace :admin do
+  #   namindexespace :admin do
   #     # Directs /admin/products/* to Admin::ProductsController
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products

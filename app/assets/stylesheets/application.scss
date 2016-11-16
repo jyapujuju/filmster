@@ -1,0 +1,28 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+ @import url('https://fonts.googleapis.com/css?family=Quicksand|Six+Caps');
+ body {
+     position: relative;
+ }
+//  font-family: 'Six Caps', sans-serif;
+// font-family: 'Quicksand', sans-serif;
+ #section1 {padding-top:50px;height:100vh;color: #fff; background-color: #1E88E5;}
+ #section2 {padding-top:50px;height:100vh;color: #fff; background-color: #673ab7;}
+ #section3 {padding-top:50px;height:100vh;color: #fff; background-color: #ff9800;}
+ #section41 {padding-top:50px;height:500px;color: #fff; background-color: #00bcd4;}
+ #section42 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
