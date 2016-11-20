@@ -15,9 +15,6 @@
   <%= f.text_field :username %>
 </div>
 <div class="field">
-  <% if f.object.image? %>
-      <%= image_tag f.object.avatar.thumb.url %>
-    <% end %>
     <%= f.label 'Profile Picture' %><br>
     <%= f.file_field :avatar %>
   </div>
