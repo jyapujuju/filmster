@@ -14,6 +14,10 @@ class ReviewsController < ApplicationController
       end
   end
 
+  def show
+    @movie = Movie.all.order('created_at DESC')
+  end
+
   private
 
   def review_params
