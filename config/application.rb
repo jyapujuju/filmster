@@ -6,6 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+
 module Filmster
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -26,5 +27,9 @@ module Filmster
       g.helper false
       g.assets false
     end
+
+
+    #load services
+    config.autoload_paths << Rails.root.join('services')
   end
 end

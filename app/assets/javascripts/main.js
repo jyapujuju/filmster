@@ -1,3 +1,5 @@
+// document.getElementById("myFrame").onload = function() {myFunction()};
+
 $(function(){
   let form = $('#movie-search');
 
@@ -8,9 +10,11 @@ $(function(){
       data: form.serialize()
     })
     .done(function(data){
+      $("#intro").remove();
       displayMovies(data);
     });
   });
+
 
   $('#movies').on('click', 'img', function(e){
     e.preventDefault();
@@ -22,17 +26,16 @@ $(function(){
 
     $.ajax({
       url: "http://www.omdbapi.com/?",
-      data: {i: id, plot: "full"}
+      data: {i: id, plot: "full",tomatoes: "true"}
     })
     .done(function(data){
-      //  console.log(data-banana);
+       console.log(data);
       displayMovie(data);
 
     })
   });
 
   function displayMovie(data){
-
     let htmlString = "";
     htmlString += `<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -40,27 +43,52 @@ $(function(){
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title" id="myModalLabel"><center></center></h4>
-                    </div>
+                </div>
+
                 <div class="modal-body">
-                    <center>
+                  <center><h3 class="media-heading"> ${data["Title"]}</h3></center>
+
+                  <div class="col-md-3">
                     <img width="100px" src=${data["Poster"] == "N/A" ? "assets/nopicture.gif" : data["Poster"]} />
-                    <h3 class="media-heading">Joe Sixpack <small>USA</small></h3>
-                    <span><strong>Skills: </strong></span>
-                        <span class="label label-warning">HTML5/CSS</span>
-                        <span class="label label-info">Adobe CS 5.5</span>
-                        <span class="label label-info">Microsoft Office</span>
-                        <span class="label label-success">Windows XP, Vista, 7</span>
-                    </center>
+                  </div>
+
+                <div class="col-md-9">
+                  <div class="col-md-2">
+                    <span style>Year: </span>
+                    <span style>Year: </span>
+                    <span style>Year: </span>
+                    <span style>Year: </span>
+                  </div>
+                  <div class="col-md-10">
+                    <span class="label label-info">${data["Year"]}</span><br>
+                    <span class="label label-info">${data["imdbID"]}</span><br>
+                    <span class="label label-info">${data["tomatoRotten"]}</span><br>
+                    <span class="label label-info">${data["Awards"]}</span><br>
+                    <span class="label label-info">${data["Director"]}</span><br>
+                    <span class="label label-info">${data["Runtime"]}</span><br>
+                    <span class="label label-info">${data["imdbRating"]}</span><br>
+                    <span class="label label-info">${data["Genre"]}</span><br>
+                    <span class="label label-info">${data["Rated"]}</span><br>
+                  </div>
+                  </div>
+                  <div>
                     <hr>
                     <center>
                     <p class="text-left"><strong>Bio: </strong><br>
-                    <!-- ${data["Plot"]}; -->
+                    ${data["Plot"]};
                     </center>
-                </div>
+                  </div>
+                  <form id="rating-form" action="/reviews" method="POST">
+                  <input type="hidden" name="authenticity_token" value=${window._token} />
+                  <input type="hidden" name="imdbid" value=${data["imdbID"]} />
+                  <textarea name="review[comment]" class="form-control" placeholder="your review goes here...." />
+                  <br />
+                  <input type="submit" class="btn btn-success" />
+                  </form>
+
                 <div class="modal-footer">
                     <center>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                    I've heard enough about Joe</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
                     </center>
                 </div>
             </div>
@@ -75,6 +103,7 @@ $(function(){
   }
 
   function displayMovies(data){
+    $("#movies").empty();
     let htmlString = "";
     data["Search"].forEach(function(movie){
       htmlString += `<div class="item well">
