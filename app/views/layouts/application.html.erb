@@ -7,9 +7,10 @@
   <%= csrf_meta_tags %>
   <script src="https://use.fontawesome.com/47b1a8d10f.js"></script>
   <%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 
 </head>
-<body data-spy="scroll" data-target=".navbar" data-offset="50">
+<body>
   <%= render '/layouts/navbar' %>
 <%= yield %>
 

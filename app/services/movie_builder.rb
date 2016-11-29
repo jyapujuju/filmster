@@ -1,5 +1,5 @@
 class MovieBuilder
-  def initialize(imdbid)
+  def initialize(imdbid:)
     @imdbid = imdbid
     @movie = Movie.find_or_initialize_by(imdbid: @imdbid)
   end

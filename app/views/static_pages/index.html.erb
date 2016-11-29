@@ -1,5 +1,8 @@
-<div class="container list" style="padding-top:50px;">
-	<div id="movies" class="row"></div>
+<div class="container-fluid" style="padding-top:50px;">
+	<div class="grid">
+		<div class="grid-sizer"></div>
+		<div id="movies"></div>
+	</div>
 	<div id="intro">
 		<aside>
 		<ul class="tag-cloud" style="padding-top:20vh;">
@@ -79,4 +82,52 @@
 	padding: 15px 35px 10px 0;
 	text-align: center
 	}
+	//pintrest
+	* { box-sizing: border-box; }
+
+	/* force scrollbar */
+	html { overflow-y: scroll; }
+
+	body { font-family: sans-serif; }
+
+	/* ---- grid ---- */
+
+	.grid {
+	  background: #DDD;
+	}
+
+	/* clear fix */
+	.grid:after {
+	  content: '';
+	  display: block;
+	  clear: both;
+	}
+
+	/* ---- .grid-item ---- */
+
+	.grid-sizer,
+	.grid-item {
+	  width: 33.333%;
+	}
+
+	.grid-item {
+	  float: left;
+	}
+
+	.grid-item img {
+	  display: block;
+	  width: 100%;
+	}
+
 </style>
+<script>
+$(function () {
+	var $grid = $('.grid').imagesLoaded( function() {
+	  $grid.masonry({
+	    itemSelector: '.grid-item',
+	    percentPosition: true,
+	    columnWidth: '.grid-sizer'
+	  });
+	});
+
+</script>

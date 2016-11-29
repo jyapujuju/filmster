@@ -1,0 +1,35 @@
+<%= @movie.title %><br>
+<%= @movie.poster %><br>
+
+<%= @movie.year %><br>
+<%= @movie.rated %><br>
+<%= @movie.released %><br>
+<%= @movie.runtime %><br>
+<%= @movie.genre %><br>
+<%= @movie.director %><br>
+<%= @movie.writer %><br>
+<%= @movie.actors %><br>
+<%= @movie.language %><br>
+<%= @movie.country %><br>
+<%= @movie.awards %><br>
+<%= @movie.metascore %><br>
+<%= @movie.imdbrating %><br>
+<%= @movie.imdbvotes %><br>
+<%= @movie.plot %><br>
+
+<% if @reviews.present? %>
+  <% @reviews.each do |review| %><br>
+    <%= review.comment %>
+  <% end %>
+  <% if !current_user.reviewed?(@movie) %>
+    <form id="rating-form" action="/reviews" method="POST">
+    <input type="hidden" name="authenticity_token" value=${window._token} />
+    <input type="hidden" name="imdbid" value=<%= @movie.imdbid %> />
+    <textarea name="review[comment]" class="form-control" placeholder="your review goes here...." /></textarea>
+    <br/>
+    <input type="submit" class="btn btn-success" />
+    </form>
+  <% end %>
+<% else %>
+  "no review yet"
+<% end %>

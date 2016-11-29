@@ -81,7 +81,7 @@ $(function(){
                   <form id="rating-form" action="/reviews" method="POST">
                   <input type="hidden" name="authenticity_token" value=${window._token} />
                   <input type="hidden" name="imdbid" value=${data["imdbID"]} />
-                  <textarea name="review[comment]" class="form-control" placeholder="your review goes here...." />
+                  <textarea name="review[comment]" class="form-control" placeholder="your review goes here...." /></textarea>
                   <br />
                   <input type="submit" class="btn btn-success" />
                   </form>
@@ -106,11 +106,11 @@ $(function(){
     $("#movies").empty();
     let htmlString = "";
     data["Search"].forEach(function(movie){
-      htmlString += `<div class="item well">
-       <a href="#" data-toggle="modal" data-target="#myModal"><img data-id=${movie["imdbID"]} src=${movie["Poster"] == "N/A" ? "assets/nopicture.gif" : movie["Poster"]} /></a>
-                      <p> ${movie["Title"]}</p>
-                      <p> ${movie["Year"]}</p>
-                      </div>`;
+      htmlString += `<div class="grid-item">
+        <a href="#" data-toggle="modal" data-target="#myModal">
+        <img data-id=${movie["imdbID"]} src=${movie["Poster"] == "N/A" ? "assets/nopicture.gif" : movie["Poster"]} />
+        </a>
+      </div>`;
     });
     $("#movies").append(htmlString);
   }

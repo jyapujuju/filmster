@@ -1,0 +1,5 @@
+<% @movies.each do|data| %>
+  <%= data.title %>
+  
+  <%= link_to "show reviews", movie_path(data), :title=>"Show movie"  %>
+<% end %>
