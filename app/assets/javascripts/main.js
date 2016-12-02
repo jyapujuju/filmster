@@ -1,6 +1,31 @@
-// document.getElementById("myFrame").onload = function() {myFunction()};
-
 $(function(){
+//   var $grid = $('#movies').masonry({
+//     itemSelector: ".grid-item",
+//   //   percentPosition: true,
+//     columnWidth: 160
+//   });
+
+let $grid = $('.grid').masonry({
+  itemSelector: '.grid-item',
+  percentPosition: true,
+    columnWidth: '.grid-sizer'
+});
+
+$grid.imagesLoaded().progress( function(){
+  $grid.masonry('layout');
+})
+
+
+
+function reloadMasonry(){
+  console.log("girrafe");
+
+  $('.grid').masonry({
+  itemSelector: '.grid-item',
+  columnWidth: 160
+});
+}
+
   let form = $('#movie-search');
 
   form.submit(function(e){
@@ -29,7 +54,7 @@ $(function(){
       data: {i: id, plot: "full",tomatoes: "true"}
     })
     .done(function(data){
-       console.log(data);
+      //  console.log(data);
       displayMovie(data);
 
     })
@@ -96,8 +121,7 @@ $(function(){
 //  console.log(htmlString);
 
   $("#modals").append(htmlString);
-  // $("#myModalLabel").append(myModalLabeldata);
-  // $("#image").append(imageData);
+
   $("#myModal").modal('show');
 
   }
@@ -112,6 +136,12 @@ $(function(){
         </a>
       </div>`;
     });
-    $("#movies").append(htmlString);
+    $("#movies").append('<div class="grid-sizer"></div>' + htmlString);
+    // reloadMasonry();
+    $(".grid").masonry( 'reloadItems' );
+    $(".grid").imagesLoaded(function(){
+      $(".grid").masonry( 'layout' );
+    })
+
   }
 })
