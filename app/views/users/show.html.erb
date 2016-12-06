@@ -1,0 +1,24 @@
+<%= image_tag @user.avatar, class: 'prof-pic-lg' %>
+<%= @user.id %>
+<%= @user.username %>
+<%= @user.reviews.count %>
+<div id="info"></div>
+<script>
+$(function(){
+  let userId = <%= @user.id %>;
+  $.ajax({
+    url:`http://localhost:3000/users/${userId}.json`
+  })
+  .done(function(data){
+
+    $("#info").append('<p>' + data.id + '</br>' + data.username + '</br>' +  data.avatar_url + '</br></p>');
+
+      data.reviews.forEach(function(review){
+        $("#info").append('<li>' + review.movie.title + '</li><li>' + review.movie.imdbid + '</li><li>' + review.comment + '</li>' );
+      })
+
+
+  })
+})
+
+</script>

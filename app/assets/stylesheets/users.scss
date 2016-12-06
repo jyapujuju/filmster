@@ -1,0 +1,27 @@
+.user-stats {
+  margin: 0 auto 10px;
+  padding: 0;
+  display: table;
+  li {
+    cursor: pointer;
+    width: 120px;
+    padding: 5px 0;
+    border-right: 1px solid #ddd;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: #777;
+    .number-label {
+      font-size: 12px;
+    }
+    .number-value {
+      font-size: 18px;
+    }
+    &:last-child {
+      border: none;
+    }
+    &:hover {
+      color: #1e1e1e;
+    }
+  }
+}
