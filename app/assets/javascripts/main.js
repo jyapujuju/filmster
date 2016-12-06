@@ -31,7 +31,7 @@ function reloadMasonry(){
   form.submit(function(e){
     e.preventDefault();
     $.ajax({
-      url: 'http://www.omdbapi.com/?',
+      url: 'https://www.omdbapi.com/?',
       data: form.serialize()
     })
     .done(function(data){
@@ -50,7 +50,7 @@ function reloadMasonry(){
     let id = $(e.target).data('id');
 
     $.ajax({
-      url: "http://www.omdbapi.com/?",
+      url: "https://www.omdbapi.com/?",
       data: {i: id, plot: "full",tomatoes: "true"}
     })
     .done(function(data){
