@@ -3,7 +3,6 @@ class CreateRelationships < ActiveRecord::Migration
     create_table :relationships do |t|
       t.references :follower
       t.references :followed
-
       t.timestamps null: false
     end
   end
