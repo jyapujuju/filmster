@@ -2,6 +2,11 @@
 <%= @user.id %>
 <%= @user.username %>
 <%= @user.reviews.count %>
+
+<span id="follow_container_<%= @user.id %>">
+  <%= render partial: 'follow', locals:{user: @user}%>
+</span>
+
 <div id="info"></div>
 <script>
 $(function(){
