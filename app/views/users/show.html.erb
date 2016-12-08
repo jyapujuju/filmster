@@ -1,3 +1,13 @@
+<div class="container-fluid" style="padding-top:50px;">
+
+		<div id="movies" class="grid">
+		</div>
+    <div id="demo">s</div>
+
+ <div id="modals"></div>
+ <div id="user-following">following</div>
+ <div id="user-followed">followed</div>
+</div>
 <%= image_tag @user.avatar, class: 'prof-pic-lg' %>
 <%= @user.id %>
 <%= @user.username %>
@@ -10,20 +20,67 @@
 <div id="info"></div>
 <script>
 $(function(){
+
+
+
+
+})
+
+
+</script>
+<script>
+$(function(){
   let userId = <%= @user.id %>;
   $.ajax({
     url:`http://localhost:3000/users/${userId}.json`
   })
   .done(function(data){
-
     $("#info").append('<p>' + data.id + '</br>' + data.username + '</br>' +  data.avatar_url + '</br></p>');
-
       data.reviews.forEach(function(review){
         $("#info").append('<li>' + review.movie.title + '</li><li>' + review.movie.imdbid + '</li><li>' + review.comment + '</li>' );
       })
 
-
   })
 })
+document.getElementById("demo").onclick = function() {myFunction()};
 
+function myFunction(){
+    document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
+}
+// document.getElementById("user-following").onclick = function() {getFollowing()};
+// function getFollowing(){
+//     document.getElementById("user-following").innerHTML = "YOU CLICKED ME!";
+// }
+$('#user-following').one('click',function(e){
+  e.preventDefault();
+  getFollowing();
+});
+
+function getFollowing(){
+  let userId = <%= @user.id %>;
+  $.ajax({
+    url:`http://localhost:3000/users/${userId}.json`
+  })
+  .done(function(data){
+      data.following_relationships.forEach(function(follow){
+        $("#user-following").append('<li>' + follow.user.username + '</li>' );
+      })
+  })
+}
+$('#user-followed').one('click',function(e){
+  e.preventDefault();
+  getFollowed();
+});
+
+function getFollowed(){
+  let userId = <%= @user.id %>;
+  $.ajax({
+    url:`http://localhost:3000/users/${userId}.json`
+  })
+  .done(function(data){
+      data.followed_relationships.forEach(function(follow){
+        $("#user-followed").append('<li>' + follow.user.username + '</li>' );
+      })
+  })
+}
 </script>

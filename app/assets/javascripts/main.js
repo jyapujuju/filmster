@@ -54,7 +54,6 @@ function reloadMasonry(){
       data: {i: id, plot: "full",tomatoes: "true"}
     })
     .done(function(data){
-      //  console.log(data);
       displayMovie(data);
 
     })
@@ -101,6 +100,7 @@ function reloadMasonry(){
                     <center>
                     <p class="text-left"><strong>Bio: </strong><br>
                     ${data["Plot"]};
+                    </p>
                     </center>
                   </div>
                   <form id="rating-form" action="/reviews" method="POST">

@@ -7,3 +7,13 @@ json.reviews do
     json.comment review.comment
   end
 end
+json.following_relationships do
+  json.array! @user.following_relationships do |following_relationship|
+    json.user following_relationship.followed, :id, :username, :avatar_url
+  end
+end
+json.followed_relationships do
+  json.array! @user.followed_relationships do |followed_relationship|
+    json.user followed_relationship.follower, :id, :username, :avatar_url
+  end
+end
