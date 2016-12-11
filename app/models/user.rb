@@ -2,6 +2,11 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_many :reviews
+
+  has_many :upvoter_votings, class_name: "Voting", foreign_key: "upvoter_id", dependent: :destroy
+  has_many :candidate_voting, class_name: "Voting", foreign_key: "candidate_id", dependent: :destroy
+  has_many :upvoter_users, through: :upvoter_votings, source: :candidate_id
+  has_many :candidate_users, through: :candidate_voting, source: :upvoter
   has_many :following_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :followed_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :following_users, through: :following_relationships, source: :followed_id
@@ -20,6 +25,15 @@ class User < ActiveRecord::Base
 
   def following?(user)
     following_relationships.exists?(followed_id: user.id)
+  end
+
+  def vote(other_user)
+    upvoter_voting.create(upvoter_id: other_user.id)
+  end
+
+  def devote(other_user)
+    voting = upvoter_voting.find_by(candidate_id: other_user.id)
+    voting.destroy
   end
 
   def follow(other_user)
