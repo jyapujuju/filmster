@@ -2,11 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_many :reviews
-
-  has_many :upvoter_votings, class_name: "Voting", foreign_key: "upvoter_id", dependent: :destroy
-  has_many :candidate_voting, class_name: "Voting", foreign_key: "candidate_id", dependent: :destroy
-  has_many :upvoter_users, through: :upvoter_votings, source: :candidate_id
-  has_many :candidate_users, through: :candidate_voting, source: :upvoter
+  has_many :voting_ballets, class_name: "ballet", foreign_key: "user_id", dependent: :destroy
+  has_many :voting_ballets, through: :voting_ballets, source: :user_id
   has_many :following_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :followed_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :following_users, through: :following_relationships, source: :followed_id
@@ -27,15 +24,6 @@ class User < ActiveRecord::Base
     following_relationships.exists?(followed_id: user.id)
   end
 
-  def vote(other_user)
-    upvoter_voting.create(upvoter_id: other_user.id)
-  end
-
-  def devote(other_user)
-    voting = upvoter_voting.find_by(candidate_id: other_user.id)
-    voting.destroy
-  end
-
   def follow(other_user)
     following_relationships.create(followed_id: other_user.id)
   end
@@ -45,5 +33,17 @@ class User < ActiveRecord::Base
     relationship.destroy
   end
 
+  def voted?(user)
+    voting_ballets.exists?(user_id: user.id)
+  end
+
+  def vote(other_user)
+    voting_ballets.create(user_id: other_user.id)
+  end
+
+  def devote(other_user)
+    bad_vote = voting_ballets.find_by(user_id: other_user.id)
+    bad_vote.destroy
+  end
 
 end

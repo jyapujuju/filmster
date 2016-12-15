@@ -9,6 +9,7 @@ class VotingController < ApplicationController
   def destroy
     current_user.devote(@user)
   end
+
   private
 
   def check_user

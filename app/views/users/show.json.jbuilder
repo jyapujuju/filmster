@@ -12,8 +12,15 @@ json.following_relationships do
     json.user following_relationship.followed, :id, :username, :avatar_url
   end
 end
+
 json.followed_relationships do
   json.array! @user.followed_relationships do |followed_relationship|
     json.user followed_relationship.follower, :id, :username, :avatar_url
   end
 end
+
+# json.upvoter_votings do
+#   json.array! @user.voting_ballets do |voting_ballet|
+#     json.user voting_ballet.voting, :user_id, :review_id
+#   end
+# end

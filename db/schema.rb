@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161206101103) do
+ActiveRecord::Schema.define(version: 20161215031125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ballets", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "review_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "ballets", ["review_id"], name: "index_ballets_on_review_id", using: :btree
+  add_index "ballets", ["user_id"], name: "index_ballets_on_user_id", using: :btree
 
   create_table "movies", force: :cascade do |t|
     t.string   "title"
@@ -81,6 +91,8 @@ ActiveRecord::Schema.define(version: 20161206101103) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "ballets", "reviews"
+  add_foreign_key "ballets", "users"
   add_foreign_key "reviews", "movies"
   add_foreign_key "reviews", "users"
 end
