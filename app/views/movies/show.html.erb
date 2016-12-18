@@ -20,6 +20,9 @@
 <% if @reviews.present? %>
   <% @reviews.each do |review| %><br>
     <%= review.comment %>
+    <span id="vote">
+      <%= render partial: 'users/vote', locals:{review: review}%>
+    </span>
   <% end %>
   <% if !current_user.reviewed?(@movie) %>
     <form id="rating-form" action="/reviews" method="POST">

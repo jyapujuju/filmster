@@ -6,15 +6,13 @@ class BalletsController < ApplicationController
   end
 
   def destroy
-    current_user.devote(@user)  
+    current_user.devote(@user)
   end
 
   private
   def check_user
-    @user = User.find(params[:id])
-
-   if (@user.id == current_user.id)
-        flash[:success] = "you can't vote yourself!"
-        redirect_to root_path
-   end
+    return if current_user.ballets.find_by(review_id: params[:id])
+    flash[:success] = "you can't vote yourself!"
+    redirect_to root_path
+  end
 end

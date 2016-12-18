@@ -2,8 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_many :reviews
-  has_many :voting_ballets, class_name: "ballet", foreign_key: "user_id", dependent: :destroy
-  has_many :voting_ballets, through: :voting_ballets, source: :user_id
+  has_many :ballets, dependent: :destroy
   has_many :following_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :followed_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :following_users, through: :following_relationships, source: :followed_id
@@ -33,16 +32,16 @@ class User < ActiveRecord::Base
     relationship.destroy
   end
 
-  def voted?(user)
-    voting_ballets.exists?(user_id: user.id)
+  def voted?(review)
+    ballets.exists?(review: review)
   end
 
-  def vote(other_user)
-    voting_ballets.create(user_id: other_user.id)
+  def vote(review)
+    ballets.create(review: review)
   end
 
-  def devote(other_user)
-    bad_vote = voting_ballets.find_by(user_id: other_user.id)
+  def devote(review)
+    bad_vote = ballets.find_by(review: review)
     bad_vote.destroy
   end
 

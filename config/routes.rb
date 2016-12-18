@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :relationships, only: [:create, :destroy]
   resources :reviews  do
-    resources :ballet, only: [:create, :destroy]
+    resources :ballets, only: [:create, :destroy]
   end
 
   # resources :upvotes, only: :create
